@@ -1,0 +1,11 @@
+{
+    "timestamp": 1556917200, 
+    "base": "USD", 
+    "rates": {
+        "CZK": 22.9456, 
+        "PLN": 3.81765, 
+        "EUR": 0.892779
+    }, 
+    "license": "https://openexchangerates.org/license", 
+    "disclaimer": "Usage subject to terms: https://openexchangerates.org/terms"
+}
