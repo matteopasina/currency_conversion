@@ -26,46 +26,22 @@ class TestCurrencyConverter(unittest.TestCase):
         self.assertDictEqual(response, expected_response)
 
     def test_convert(self):
-        expected_response = {
-            "converted_value": "1.3021",
-            "from_currency": "CZK",
-            "to_currency": "PLN",
-            "original_value": "7.83",
-            "conversion_rate": "0.1663",
-            "timestamp": "TIME"
-        }
+        expected_response = Decimal('1.302129')
         converter = CurrencyConverter('CZK', 'PLN', '7,83', self.retriever)
         response = converter.convert()
-        response["timestamp"] = "TIME"
-        self.assertDictEqual(response, expected_response)
+        self.assertEqual(response, expected_response)
 
     def test_convert_from_USD(self):
-        expected_response = {
-            "converted_value": "60.4634",
-            "from_currency": "USD",
-            "to_currency": "PLN",
-            "original_value": "15.8389",
-            "conversion_rate": "3.8174",
-            "timestamp": "TIME"
-        }
+        expected_response = Decimal('60.46341686')
         converter = CurrencyConverter('USD', 'PLN', '15,8389', self.retriever)
         response = converter.convert()
-        response["timestamp"] = "TIME"
-        self.assertDictEqual(response, expected_response)
+        self.assertEqual(response, expected_response)
 
     def test_convert_to_USD(self):
-        expected_response = {
-            "converted_value": "1120.7000",
-            "from_currency": "EUR",
-            "to_currency": "USD",
-            "original_value": "1000",
-            "conversion_rate": "1.1207",
-            "timestamp": "TIME"
-        }
+        expected_response = Decimal('1120.7000')
         converter = CurrencyConverter('EUR', 'USD', '1000', self.retriever)
         response = converter.convert()
-        response["timestamp"] = "TIME"
-        self.assertDictEqual(response, expected_response)
+        self.assertEqual(response, expected_response)
 
     def test_build_response(self):
         expected_response = {
@@ -79,8 +55,7 @@ class TestCurrencyConverter(unittest.TestCase):
         converter = CurrencyConverter('EUR', 'USD', '1000', self.retriever)
         converted_value = Decimal('8000')
         conversion_rate = Decimal('1.289')
-        converter._build_response(converted_value, conversion_rate)
-        response = converter.response
+        response = converter.build_response(converted_value, conversion_rate)
         response["timestamp"] = "TIME"
         self.assertDictEqual(response, expected_response)
 

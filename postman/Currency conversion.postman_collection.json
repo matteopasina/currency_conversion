@@ -1,0 +1,73 @@
+{
+	"info": {
+		"_postman_id": "5294de0a-fb12-4a52-a7cf-1d3492d1cb18",
+		"name": "Currency conversion",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Basic GET rate",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "currency",
+						"value": "EUR",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{URL}}/rate",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"rate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Basic GET convert",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "from_currency",
+						"value": "CZK",
+						"type": "text"
+					},
+					{
+						"key": "to_currency",
+						"value": "PLN",
+						"type": "text"
+					},
+					{
+						"key": "value",
+						"value": "7,83",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{URL}}/convert",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"convert"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
