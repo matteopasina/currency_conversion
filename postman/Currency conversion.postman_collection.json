@@ -68,6 +68,34 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "POST convert",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"to_currenciy\":\"\",\n\t\"amounts\":[\n\t\t{\n\t\t\t\"amounts\":[\"1\",\"2\"]\n\t\t}\n\t]\n}"
+				},
+				"url": {
+					"raw": "{{URL}}/convert",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"convert"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
