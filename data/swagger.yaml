@@ -1,0 +1,26 @@
+type: object
+description:
+  Input parameters for the currency conversion request.
+  This conversion can be performed by providing a list of amounts in input
+required:
+  - to_currency
+properties:
+  toCurrency:
+    description: Required wished currency (format ISO 4217 https://www.iso.org/iso-4217-currency-codes.html)
+    type: string
+  amounts:
+    description: List of providers that need amounts to be converted
+    type: array
+    items:
+      type: object
+      required:
+      - from_currency
+      properties:
+        amounts:
+          type: array
+          description: List of amounts to be converted
+          items:
+            type: string
+        fromCurrency:
+          type: string
+          description: Required original currency (format ISO 4217 https://www.iso.org/iso-4217-currency-codes.html)

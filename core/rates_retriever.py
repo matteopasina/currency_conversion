@@ -11,18 +11,21 @@ class RateRetriever:
         self.conversion_rates = {}
         self.now = datetime.now()
         self.delta = timedelta(hours=24)
-        self.rate = dict()
+        self.response = dict()
 
     def get_rates(self, currency):
+        if currency and currency not in CURRENCIES_SUPPORTED:
+            self.response['ERROR'] = "Currency not supported"
+            return self.response
 
         self.load_rates()
 
-        if currency and currency in self.conversion_rates['rates']:
-            self.rate[currency] = self.conversion_rates['rates'][currency]
+        if currency in self.conversion_rates['rates']:
+            self.response[currency] = self.conversion_rates['rates'][currency]
         else:
-            self.rate = self.conversion_rates['rates']
+            self.response = self.conversion_rates['rates']
 
-        return self.rate
+        return self.response
 
     def load_rates(self):
         if self.rates_file:

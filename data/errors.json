@@ -1,0 +1,29 @@
+{
+  "warning_no_rate" : {
+  "title": "CURRENCY CONVERSION RATE NOT AVAILABLE",
+  "code": "38938",
+  "status": 201
+  },
+  "error_invalid_message" : {
+  "errors": [
+    {
+      "title": "INVALID FORMAT OR MISSING PARAMETERS",
+      "code": "27598",
+      "status": 400
+    }
+  ]
+  },
+  "error_message" : {
+  "errors": [
+    {
+      "title": "UNABLE TO PROCESS - SYSTEM ERROR",
+      "code": "9555",
+      "status": 500
+    }
+  ]
+  },
+  "success_same_currency" : {
+  "title": "No need to convert, same currency in/out",
+  "code": "201"
+  }
+}

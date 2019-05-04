@@ -8,6 +8,7 @@ import json
 
 app = Flask(__name__)
 
+
 @app.route('/convert', methods=['POST'])
 def convert_multi():
     if request.method == 'POST':
@@ -18,7 +19,7 @@ def convert_multi():
                 trace(DEBUG, "Validation has been successful")
                 response = CurrencyConverter().launch_conversion(currency_request)
                 return jsonify(response), 201
-            else:
+           else:
                 return jsonify(CurrencyConverterHelper.error_invalid_message), 400
         except Exception as error:
             trace(ERROR, "CurrencyConverter has encountered an error {}".format(error))
@@ -30,8 +31,8 @@ def convert_multi():
 @app.route('/rate', methods=['GET'])
 def rate():
     if request.method == 'GET':
-        rr = RateRetriever(RATES_FILE)
-        return json.dumps(rr.get_rates(request.headers.get('currency')), indent=4)
+        retriever = RateRetriever(RATES_FILE)
+        return json.dumps(retriever.get_rates(request.headers.get('currency')), indent=4)
 
 
 @app.route('/convert', methods=['GET'])
@@ -39,10 +40,9 @@ def convert():
     if request.method == 'GET':
         from_currency = request.headers.get('from_currency')
         to_currency = request.headers.get('to_currency')
-        if from_currency not in CURRENCIES_SUPPORTED or to_currency not in CURRENCIES_SUPPORTED:
-            return "Currency not supported"
         value = request.headers.get('value')
-        converter = CurrencyConverter(from_currency, to_currency, value)
+        retriever = RateRetriever(RATES_FILE)
+        converter = CurrencyConverter(from_currency, to_currency, value, retriever)
         return json.dumps(converter.convert(), indent=4)
 
 

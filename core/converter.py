@@ -1,15 +1,17 @@
-from rates_retriever import RateRetriever
 from data.constants import *
 from decimal import Decimal
 from datetime import datetime
 
 
 class CurrencyConverter:
-    def __init__(self, from_currency, to_currency, value):
+    def __init__(self, from_currency, to_currency, value, retriever):
+        if from_currency not in CURRENCIES_SUPPORTED or to_currency not in CURRENCIES_SUPPORTED:
+            self.response['ERROR'] = "Currency not supported"
+            return self.response
         self.from_currency = from_currency
         self.to_currency = to_currency
         self.value = Decimal(value.replace(',', '.'))
-        self.retriever = RateRetriever(RATES_FILE)
+        self.retriever = retriever
         self.response = {}
 
     def convert(self):
