@@ -11,29 +11,31 @@ class RateRetriever:
         self.conversion_rates = {}
         self.now = datetime.now()
         self.delta = timedelta(hours=24)
-        self.rate = str()
+        self.rate = dict()
 
     def get_rates(self, currency):
 
         self.load_rates()
-        timestamp_rates = datetime.fromtimestamp(self.conversion_rates['timestamp'])
 
-        # if file of rates is older than 24h, call api and update it
-        if self.delta > self.now - timestamp_rates:
-            self.call_api()
-            self.update_rates()
-
-        if currency:
-            self.rate = self.conversion_rates['rates'][currency]
+        if currency and currency in self.conversion_rates['rates']:
+            self.rate[currency] = self.conversion_rates['rates'][currency]
         else:
-            self.rate = json.dumps(self.conversion_rates['rates'])
+            self.rate = self.conversion_rates['rates']
 
-        return str(self.rate)
+        return self.rate
 
     def load_rates(self):
         if self.rates_file:
             with open(self.rates_file, 'r') as rates:
                 self.conversion_rates = json.load(rates)
+
+            timestamp_rates = datetime.fromtimestamp(self.conversion_rates['timestamp'])
+
+            # if file of rates is older than 24h, call api and update it
+            if self.delta < self.now - timestamp_rates:
+                print("Rates older than 24h: updating rates")
+                self.call_api()
+                self.update_rates()
 
     def call_api(self):
         params = {'app_id': APP_ID,
