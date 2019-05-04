@@ -37,18 +37,22 @@ class RateRetriever:
             # if file of rates is older than 24h, call api and update it
             if self.delta < self.now - timestamp_rates:
                 print("Rates older than 24h: updating rates")
-                self.call_api()
-                self.update_rates()
+                self._call_api()
+                self._update_rates()
 
-    def call_api(self):
+    def _call_api(self):
         params = {'app_id': APP_ID,
                   'symbols': CURRENCIES,
                   'prettyprint': False,
                   'show_alternative': False}
 
-        self.conversion_rates = json.loads(requests.get(API_URL_LATEST, params=params).content)
+        response_api = requests.get(API_URL_LATEST, params=params)
+        if response_api.ok:
+            self.conversion_rates = json.loads(response_api.content)
+        else:
+            self.response['ERROR'] = "Unable to call exchange rates API"
 
-    def update_rates(self):
+    def _update_rates(self):
         with open(self.rates_file, 'w') as rates:
             json.dump(self.conversion_rates, rates, indent=4)
 
