@@ -38,7 +38,7 @@ class MultiCurrencyConverter(CurrencyConverter):
             amount_obj['from_currency'] = self.from_currency
 
             for amount in amount_currency['amounts']:
-                self.value = Decimal(amount.replace(',', '.'))
+                self.value = amount
                 if conv_amounts:
                     conv_amounts.append(str(self.convert()))
                 else:

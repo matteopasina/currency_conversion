@@ -18,11 +18,10 @@ class CurrencyConverter:
         """
         self.from_currency = from_currency
         self.to_currency = to_currency
-        if value:
-            self.value = Decimal(value.replace(',', '.'))
+        self.response = {}
+        self.value = value
         self.retriever = retriever
         self.conversion_rate = None
-        self.response = {}
 
     def convert(self):
         """
@@ -33,6 +32,13 @@ class CurrencyConverter:
         # Currencies supported are USD, EUR, PLN, CZK
         if self.from_currency not in CURRENCIES_SUPPORTED or self.to_currency not in CURRENCIES_SUPPORTED:
             self.response['ERROR'] = "Currency not supported"
+            return self.response
+
+        try:
+            self.value = Decimal(self.value.replace(',', '.'))
+        except Exception as e:
+            print(e)
+            self.response['ERROR'] = "Not a valid value to convert"
             return self.response
 
         if not self.retriever.conversion_rates:
@@ -52,6 +58,8 @@ class CurrencyConverter:
         :param converted_value: the converted value
         :return: a dict with all the information of the conversion that can be sent as a response to the client
         """
+        if 'ERROR' in self.response:
+            return self.response
         self.response['converted_value'] = str(converted_value.quantize(PRECISION))
         self.response['from_currency'] = self.from_currency
         self.response['to_currency'] = self.to_currency
