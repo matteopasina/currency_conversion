@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "Basic GET rate",
+			"name": "GET rate",
 			"request": {
 				"method": "GET",
 				"header": [
@@ -33,7 +33,7 @@
 			"response": []
 		},
 		{
-			"name": "Basic GET convert",
+			"name": "GET convert",
 			"request": {
 				"method": "GET",
 				"header": [
@@ -49,7 +49,7 @@
 					},
 					{
 						"key": "value",
-						"value": "7,83",
+						"value": "7",
 						"type": "text"
 					}
 				],
@@ -83,7 +83,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"to_currenciy\":\"\",\n\t\"amounts\":[\n\t\t{\n\t\t\t\"amounts\":[\"1\",\"2\"]\n\t\t}\n\t]\n}"
+					"raw": "{\n\t\"to_currency\":\"EUR\",\n\t\"amounts\":[\n\t\t{\n\t\t\t\"from_currency\": \"USD\",\n\t\t\t\"amounts\":[\"1\",\"2\"]\n\t\t},\n\t\t{\n\t\t\t\"from_currency\": \"PLN\",\n\t\t\t\"amounts\":[\"37\",\"2,89\", \"9.3\"]\n\t\t},\n\t\t{\n\t\t\t\"from_currency\": \"EUR\",\n\t\t\t\"amounts\":[\"37\",\"2,89\", \"9.3\"]\n\t\t}\n\t]\n}"
 				},
 				"url": {
 					"raw": "{{URL}}/convert",
