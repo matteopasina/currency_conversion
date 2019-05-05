@@ -47,8 +47,8 @@ def convert():
         value = request.headers.get('value')
         retriever = RateRetriever(RATES_FILE)
         converter = CurrencyConverter(from_currency, to_currency, value, retriever)
-        converter.convert()
-        return json.dumps(converter.build_response(), indent=4)
+        converted_value = converter.convert()
+        return json.dumps(converter.build_response(converted_value), indent=4)
 
 
 if __name__ == '__main__':

@@ -12,6 +12,7 @@ class CurrencyConverter:
         if value:
             self.value = Decimal(value.replace(',', '.'))
         self.retriever = retriever
+        self.conversion_rate = None
         self.response = {}
 
     def convert(self):
@@ -25,17 +26,17 @@ class CurrencyConverter:
         base = self.retriever.conversion_rates['base']
         rates = self.retriever.conversion_rates['rates']
 
-        conversion_rate = self._compute_conversion_rate(base, rates)
-        converted_value = self.value * conversion_rate
+        self.conversion_rate = self._compute_conversion_rate(base, rates)
+        converted_value = self.value * self.conversion_rate
 
         return converted_value
 
-    def build_response(self, converted_value, conversion_rate):
+    def build_response(self, converted_value):
         self.response['converted_value'] = str(converted_value.quantize(PRECISION))
         self.response['from_currency'] = self.from_currency
         self.response['to_currency'] = self.to_currency
         self.response['original_value'] = str(self.value)
-        self.response['conversion_rate'] = str(conversion_rate.quantize(PRECISION))
+        self.response['conversion_rate'] = str(self.conversion_rate.quantize(PRECISION))
         self.response['timestamp'] = datetime.now().isoformat()
         return self.response
 

@@ -29,8 +29,8 @@ class TestMultiCurrencyConverter(unittest.TestCase):
                 {
                     "from_currency": "USD",
                     "converted_amounts": [
-                        "0.8923",
-                        "1.7846"
+                        "0.8919",
+                        "1.7838"
                     ]
                 },
                 {

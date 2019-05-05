@@ -32,27 +32,28 @@ class RateRetriever:
             with open(self.rates_file, 'r') as rates:
                 self.conversion_rates = json.load(rates)
 
-            timestamp_rates = datetime.fromtimestamp(self.conversion_rates['timestamp'])
+            if 'timestamp' in self.conversion_rates and self.conversion_rates['timestamp'] != "TEST":
+                timestamp_rates = datetime.fromtimestamp(self.conversion_rates['timestamp'])
 
-            # if file of rates is older than 24h, call api and update it
-            if self.delta < self.now - timestamp_rates:
-                print("Rates older than 24h: updating rates")
-                self._call_api()
-                self._update_rates()
+                # if file of rates is older than 24h, call api and update it
+                if self.delta < self.now - timestamp_rates:
+                    print("Rates older than 24h: updating rates")
+                    params = {'app_id': APP_ID,
+                              'symbols': CURRENCIES,
+                              'prettyprint': False,
+                              'show_alternative': False}
+                    self._call_api(API_URL_LATEST, params)
+                    self._update_rates()
 
-    def _call_api(self):
-        params = {'app_id': APP_ID,
-                  'symbols': CURRENCIES,
-                  'prettyprint': False,
-                  'show_alternative': False}
-
-        response_api = requests.get(API_URL_LATEST, params=params)
+    def _call_api(self, url, params):
+        response_api = requests.get(url, params=params)
         if response_api.ok:
             self.conversion_rates = json.loads(response_api.content)
         else:
             self.response['ERROR'] = "Unable to call exchange rates API"
 
     def _update_rates(self):
-        with open(self.rates_file, 'w') as rates:
-            json.dump(self.conversion_rates, rates, indent=4)
+        if self.conversion_rates:
+            with open(self.rates_file, 'w') as rates:
+                json.dump(self.conversion_rates, rates, indent=4)
 

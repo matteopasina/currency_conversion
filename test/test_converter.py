@@ -1,7 +1,5 @@
 import unittest
-import json
 from decimal import Decimal
-from datetime import datetime
 from core.rates_retriever import RateRetriever
 from core.converter import CurrencyConverter
 from data.constants import *
@@ -9,14 +7,6 @@ from data.constants import *
 
 class TestCurrencyConverter(unittest.TestCase):
     def setUp(self):
-        # Mocked timestamp in never older than 24h
-        with open(MOCKED_RATES_FILE, 'r') as rates:
-            mocked_rates_file = json.load(rates)
-        if mocked_rates_file:
-            mocked_rates_file['timestamp'] = datetime.now().timestamp()
-            with open(MOCKED_RATES_FILE, 'w') as rates:
-                json.dump(mocked_rates_file, rates, indent=4)
-
         self.retriever = RateRetriever(MOCKED_RATES_FILE)
 
     def test_currency_not_supported(self):
@@ -38,7 +28,7 @@ class TestCurrencyConverter(unittest.TestCase):
         self.assertEqual(response, expected_response)
 
     def test_convert_to_USD(self):
-        expected_response = Decimal('1120.7000')
+        expected_response = Decimal('1121.2000')
         converter = CurrencyConverter('EUR', 'USD', '1000', self.retriever)
         response = converter.convert()
         self.assertEqual(response, expected_response)
@@ -50,13 +40,13 @@ class TestCurrencyConverter(unittest.TestCase):
             "to_currency": "USD",
             "original_value": "1000",
             "conversion_rate": "1.2890",
-            "timestamp": "TIME"
+            "timestamp": "TEST"
         }
         converter = CurrencyConverter('EUR', 'USD', '1000', self.retriever)
         converted_value = Decimal('8000')
-        conversion_rate = Decimal('1.289')
-        response = converter.build_response(converted_value, conversion_rate)
-        response["timestamp"] = "TIME"
+        converter.conversion_rate = Decimal('1.289')
+        response = converter.build_response(converted_value)
+        response["timestamp"] = "TEST"
         self.assertDictEqual(response, expected_response)
 
     def test_compute_conversion_rate_to_USD(self):

@@ -1,0 +1,11 @@
+{
+    "disclaimer": "NO TERMS",
+    "license": "MOCKEDLICENSE",
+    "timestamp": 34239429042,
+    "base": "USD",
+    "rates": {
+        "CZK": 2000,
+        "EUR": 432,
+        "PLN": 4344
+    }
+}
