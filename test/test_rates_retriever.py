@@ -6,6 +6,7 @@ from core.rates_retriever import RateRetriever
 from data.constants import *
 
 
+# Function to mock the get request
 def mocked_requests_get(*args, **kwargs):
     class MockResponse:
         def __init__(self, content, status_code, ok):

@@ -3,8 +3,14 @@ from decimal import Decimal
 
 
 class MultiCurrencyConverter(CurrencyConverter):
+    """
+    This class handles the conversion of multiple values from multiple currencies
+    """
 
     def __init__(self, retriever):
+        """
+        :param retriever: the retriever object that is uses to get the exchange rates
+        """
         self.from_currency = None
         self.to_currency = None
         self.value = None
@@ -12,6 +18,12 @@ class MultiCurrencyConverter(CurrencyConverter):
         self.response = {}
 
     def multi_convert(self, request):
+        """
+        Given the POST request received this method computes the converted values using the convert method
+        of CurrencyConverter and builds the response
+        :param request: json body of the POST request
+        :return: the response that can be sent to the client
+        """
         converted_amounts_obj = []
 
         self.to_currency = request['to_currency']

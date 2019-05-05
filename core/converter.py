@@ -5,8 +5,17 @@ PRECISION = Decimal('.0001')
 
 
 class CurrencyConverter:
+    """
+    This class converts a value from a currency to another
+    """
 
     def __init__(self, from_currency, to_currency, value, retriever):
+        """
+        :param from_currency: the original currency of the value
+        :param to_currency: the desired currency
+        :param value: the value to be converted
+        :param retriever: the retriever object that is uses to get the exchange rates
+        """
         self.from_currency = from_currency
         self.to_currency = to_currency
         if value:
@@ -16,6 +25,12 @@ class CurrencyConverter:
         self.response = {}
 
     def convert(self):
+        """
+        This method checks if the currencies are supported, then loads the latest rates and computes the conversion
+        :return: the converted value
+        """
+
+        # Currencies supported are USD, EUR, PLN, CZK
         if self.from_currency not in CURRENCIES_SUPPORTED or self.to_currency not in CURRENCIES_SUPPORTED:
             self.response['ERROR'] = "Currency not supported"
             return self.response
@@ -32,6 +47,11 @@ class CurrencyConverter:
         return converted_value
 
     def build_response(self, converted_value):
+        """
+        This method builds the dictionary with the converted value and some information about the conversion
+        :param converted_value: the converted value
+        :return: a dict with all the information of the conversion that can be sent as a response to the client
+        """
         self.response['converted_value'] = str(converted_value.quantize(PRECISION))
         self.response['from_currency'] = self.from_currency
         self.response['to_currency'] = self.to_currency
@@ -41,6 +61,13 @@ class CurrencyConverter:
         return self.response
 
     def _compute_conversion_rate(self, base, rates):
+        """
+        This method computes the conversion rate of the conversion, since the free API returns only the rates
+        for USD as base, the other conversion rates have to be computed from that
+        :param base: the base currency
+        :param rates: the rates available
+        :return: the conversion rate as Decimal
+        """
         # If from USD
         if self.from_currency == base:
             return Decimal(rates[self.to_currency]).quantize(PRECISION)
