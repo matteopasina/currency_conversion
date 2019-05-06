@@ -1,6 +1,8 @@
-import requests
 import json
 from datetime import datetime, timedelta
+
+import requests
+
 from data.constants import *
 
 

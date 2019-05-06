@@ -1,5 +1,4 @@
 from core.converter import CurrencyConverter
-from decimal import Decimal
 
 
 class MultiCurrencyConverter(CurrencyConverter):

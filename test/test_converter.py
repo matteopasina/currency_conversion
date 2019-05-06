@@ -1,7 +1,8 @@
 import unittest
 from decimal import Decimal
-from core.rates_retriever import RateRetriever
+
 from core.converter import CurrencyConverter
+from core.rates_retriever import RateRetriever
 from data.constants import *
 
 

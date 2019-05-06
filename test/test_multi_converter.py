@@ -1,7 +1,8 @@
 import unittest
-from data.constants import *
+
 from core.multi_converter import MultiCurrencyConverter
 from core.rates_retriever import RateRetriever
+from data.constants import *
 
 
 class TestMultiCurrencyConverter(unittest.TestCase):

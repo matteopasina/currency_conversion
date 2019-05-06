@@ -1,6 +1,8 @@
-from data.constants import *
-from decimal import Decimal
 from datetime import datetime
+from decimal import Decimal
+
+from data.constants import *
+
 PRECISION = Decimal('.0001')
 
 

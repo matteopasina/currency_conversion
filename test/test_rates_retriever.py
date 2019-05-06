@@ -1,7 +1,8 @@
-import unittest
 import json
+import unittest
 from datetime import datetime, timedelta
 from unittest.mock import patch
+
 from core.rates_retriever import RateRetriever
 from data.constants import *
 
@@ -65,7 +66,7 @@ class TestRateRetriever(unittest.TestCase):
         self.retriever.conversion_rates = {
             "disclaimer": "Usage subject to terms: https://openexchangerates.org/terms",
             "license": "https://openexchangerates.org/license",
-            "timestamp": 1557068423,
+            "timestamp": "TEST",
             "base": "USD",
             "rates": {
                 "CZK": 22.9508,
