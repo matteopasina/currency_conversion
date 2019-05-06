@@ -44,7 +44,7 @@ Convert the value in input from the specified currency to the desired currency
 `POST /convert`
 
 Swagger of the POST body:
-
+```
 type: object
 required:
 - to_currency
@@ -66,12 +66,13 @@ properties:
             type: string
         from_currency:
           type: string
-
+```
 ### Response
 
 Converted multiple values
 
 Example:
+```
 {
     "to_currency": "EUR",
     "converted-amounts": [
@@ -100,3 +101,5 @@ Example:
         }
     ]
 }
+```
+
