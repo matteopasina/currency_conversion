@@ -56,6 +56,9 @@ class RateRetriever:
                     timestamp_rates = datetime.fromtimestamp(self.conversion_rates['timestamp'])
 
                     # if file of rates is older than 24h, call api and update it
+                    # I didn't chose to do a call every day at the same hour with a scheduler, because
+                    # I think that if the traffic is high it will be the same, if not anyway the rates will
+                    # be updated if older than 24h and the so the requests will be less than updating it every day
                     if self.delta < self.now - timestamp_rates:
                         print("Rates older than 24h: updating rates")
                         params = {'app_id': APP_ID,
