@@ -1,5 +1,5 @@
 # Currency converter
-REST API for converting currencies
+REST API to convert currencies
 
 ## Getting Started
 
